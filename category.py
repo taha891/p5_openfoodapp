@@ -2,7 +2,7 @@ class Category:
     ''' This class create, use and check the category of a product'''
 
     def __init__(self, category):
-        self.category = category
+        self.category = category #self.name = category
         
         # Ok le constructeur ?
         # Liste ou dictionnaire pour les catégories ?
