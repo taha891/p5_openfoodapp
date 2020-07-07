@@ -3,15 +3,20 @@ import requests
 from product import Product
 from category import Category
 from request import ApiRequest
+from menu import Menu
+from bdd import Database
 
 ''' créer virtualenv'''
 
 if __name__ == "__main__":
+    ''' First menu '''
+    # menu = Menu()
+    # menu.welcome_menu()
 
     ''' Get the data from the API'''
 
     category = ["legumineuses", "infusions", "boissons-aux-fruits",
-                "cremes", "plats-prepares-en-conserve"]
+                "cremes", "plats-prepares-en-conserve"] # verif category
 
     ''' Instantiation of 5 categories of products '''
     categories = []
@@ -24,33 +29,26 @@ if __name__ == "__main__":
 # Ajouter l'instance dans une liste ( append)
     ''' Request from the API to get the product'''
     #print(categories[0].category)
-    for x in range(5):
-        var = ApiRequest(categories[x]) # instance de categorie dans API 
+    products = []
+    for x in range(4):
+        var = ApiRequest(categories[x])  # instance de categorie dans API
         liste = var.request()
-        print(liste)
-
-   # instancier mes produits depuis la liste
-    ''' Utilisation de la liste'''
-    # indice de 0 à 3 : 0 name, 1 nutriscore, 2 url, 3 magasin
-    # faire un split à 3 pour reinitialiser le i
-
-    '''produit : prend en paramètre unpacking ( prendre en paramètre une liste ou dictionnaire)'''
-   
-
-
-    #x = var.request())
-    # On récupère les infos nécéssaires : self.name, self.nutriscore, self.url_prod, self.stores
-    
-   
-
-    ''' Store the product in the Product object'''
-    prod_cat = Product(liste)
-    print(prod_cat)
-
+        #print(liste)
+        ''' Store the product in the Product object'''
+       # instancier mes produits depuis la liste
+        for i in range(len(liste)):
+            product = Product(x, liste[i])
+            products.append(product)
+            #print(products[i])
+            
 
 
     ''' Save data in the local database with mysql connector'''
-
+    # my_database = Database()
+    # for product in products:
+    #     my_database.product_db(product)
+    #     f = my_database.product_db(product)
+    #     print(f)
     
 # Interaction with user
     ''' This menu give the choice to the user '''

@@ -25,10 +25,9 @@ class ApiRequest:
         
         for product in self.products:
             self.name = product.get("product_name", "no information")
-            self.unique_scans_n = product.get("unique_scans_n", "not available")
+            self.unique_scans_n = product.get("unique_scans_n", "not available") # Peut être enlver
             self.nutriscore = product.get("nutriscore_grade", "e")
             self.url_prod = product.get("url", "no information")
             self.stores = product.get("stores", "no information")
-            #print(self.name, self.nutriscore, self.url_prod, self.stores)
-            self.liste_prod.extend([self.name, self.nutriscore, self.url, self.stores])
+            self.liste_prod.append([self.name, self.nutriscore, self.url, self.stores])
         return self.liste_prod
