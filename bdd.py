@@ -18,23 +18,27 @@ print(openfood_db)
 mycursor = openfood_db.cursor()
 class Database:
 
-    def __init__(self):
-        self.product = 0
+    def __init__(self, product):
+        self.product = product
         self.category = 0
-
-
+        self.name = 0
+        self.nutriscore = 0
+        self.url = 0
+        self.stores = 0
 
     ''' Function for the table products'''
-    def product_db(self, product):
-        mycursor.execute("DROP TABLE products")
-        openfood_db.commit()
+    def product_db(self, name, nutriscore, url, stores):
+        # mycursor.execute("DROP TABLE products")
+        # openfood_db.commit()
         ''' Create table for the products'''
 
-        mycursor.execute("CREATE TABLE products(id SMALLINT UNSIGNED NOT NULL AUTO_INCREMENT, name VARCHAR(45), nutriscore VARCHAR(1), url VARCHAR(100), store VARCHAR(45), PRIMARY KEY (id))")
+        #mycursor.execute("CREATE TABLE products(id SMALLINT UNSIGNED NOT NULL AUTO_INCREMENT, name VARCHAR(45), nutriscore VARCHAR(1), url VARCHAR(100), store VARCHAR(45), PRIMARY KEY (id))")
         # Comment prendre info depuis l'objet product
-        sql = "INSERT INTO products (name) VALUES (%s)"
-        val = (self.product) # Comment aller chercher les valeurs de la lsite
+        sql = "INSERT INTO products (name, nutriscore, url, store) VALUES (%s, %s, %s, %s)"
+        val = (self.name, self.nutriscore, self.url, self.stores) # Comment aller chercher les valeurs de la lsite
         mycursor.execute(sql, val)
+        openfood_db.commit()
+        print(mycursor.rowcount, "record inserted.")
 
     def category_db(self):
         ''' Create table for the category'''

@@ -12,7 +12,7 @@ class Product:
         self.nutriscore = liste[1]
         self.url = liste[2]
         self.stores = liste[3]
-        print(self.name)
+        #print(self.name)
         # utiliser @property pour faire de la methode un attribut
         # Faire un split tous les 4 élements
 

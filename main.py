@@ -39,21 +39,17 @@ if __name__ == "__main__":
         for i in range(len(liste)):
             product = Product(x, liste[i])
             products.append(product)
-            #print(products[i])
-            
 
+    print(products[0].name)       
 
     ''' Save data in the local database with mysql connector'''
-    # my_database = Database()
-    # for product in products:
-    #     my_database.product_db(product)
-    #     f = my_database.product_db(product)
-    #     print(f)
+    my_database = Database(products[0])
     
+    d = my_database.product_db(products[0].name, products[0].nutriscore, products[0].url, products[0].stores)
+    print(d)
+        
+        # f = my_database.product_db(product)
+        #print(f)
+
 # Interaction with user
     ''' This menu give the choice to the user '''
-
-
-    
-
-    
