@@ -43,10 +43,12 @@ if __name__ == "__main__":
     print(products[0].name)       
 
     ''' Save data in the local database with mysql connector'''
-    my_database = Database(products[0])
     
-    d = my_database.product_db(products[0].name, products[0].nutriscore, products[0].url, products[0].stores)
-    print(d)
+    my_database = Database(products[i].name, products[i].nutriscore, products[i].url, products[i].stores)
+
+    my_database.add_product()
+    #my_database.add_product(products[0].name, products[0].nutriscore, products[0].url, products[0].stores)
+    
         
         # f = my_database.product_db(product)
         #print(f)

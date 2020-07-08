@@ -5,29 +5,32 @@ from product import Product
 # fonction en prarametre product()
 # 1 fonction par table
 # 1 
+try:
+    openfood_db = mysql.connector.connect(
+        host="localhost",
+        user="root",
+        passwd="banane35",
+        database="openfooddb"
+    )
 
-openfood_db = mysql.connector.connect(
-    host="localhost",
-    user="root",
-    passwd="banane35",
-    database="openfooddb"
-)
+    print(openfood_db)
 
-print(openfood_db)
+    mycursor = openfood_db.cursor()
+except mysql.connector.Error as err:
+    print(err)
 
-mycursor = openfood_db.cursor()
-class Database:
+class Database():
 
-    def __init__(self, product):
-        self.product = product
+    def __init__(self, name, nutriscore, url, stores):
+        self.product = 0
         self.category = 0
-        self.name = 0
-        self.nutriscore = 0
-        self.url = 0
-        self.stores = 0
+        self.name = name
+        self.nutriscore = nutriscore
+        self.url = url
+        self.stores = stores
 
     ''' Function for the table products'''
-    def product_db(self, name, nutriscore, url, stores):
+    def add_product(self):
         # mycursor.execute("DROP TABLE products")
         # openfood_db.commit()
         ''' Create table for the products'''
@@ -35,16 +38,21 @@ class Database:
         #mycursor.execute("CREATE TABLE products(id SMALLINT UNSIGNED NOT NULL AUTO_INCREMENT, name VARCHAR(45), nutriscore VARCHAR(1), url VARCHAR(100), store VARCHAR(45), PRIMARY KEY (id))")
         # Comment prendre info depuis l'objet product
         sql = "INSERT INTO products (name, nutriscore, url, store) VALUES (%s, %s, %s, %s)"
-        val = (self.name, self.nutriscore, self.url, self.stores) # Comment aller chercher les valeurs de la lsite
+        # Comment aller chercher les valeurs de la lsite
+        val = (self.name, self.nutriscore, self.url, self.stores)
         mycursor.execute(sql, val)
         openfood_db.commit()
         print(mycursor.rowcount, "record inserted.")
 
-    def category_db(self):
+    def add_category(self):
         ''' Create table for the category'''
         mycursor.execute("CREATE TABLE category(id SMALLINT UNSIGNED NOT NULL AUTO_INCREMENT, name VARCHAR(45), PRIMARY KEY (id))")
 
 
+        sql = "INSERT INTO category (category) VALUES (%s)"
+        # Comment aller chercher les valeurs de la lsite
+        val = (self.category)
+        mycursor.execute(sql, val)
         openfood_db.commit()
         print(mycursor.rowcount, "record inserted.")
     # Plusieurs commit pour les créations de table ?
