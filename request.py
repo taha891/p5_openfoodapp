@@ -6,7 +6,7 @@ class ApiRequest:
 
     def __init__(self, category):
         self.category = category.category
-        self.url = 'https://fr.openfoodfacts.org/categorie/{self.category}.json' #{category.name}
+        self.url = f"https://fr.openfoodfacts.org/categorie/{self.category}.json"
         self.result = requests.get(self.url)
         self.liste_prod = []
         

@@ -8,7 +8,7 @@ class Category:
         # Liste ou dictionnaire pour les catégories ?
 
     def __str__(self):
-        return "The category chosen is {}".format(self.category)
+        return self.category
 
     
     def client_category(self):

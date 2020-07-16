@@ -4,7 +4,7 @@ from product import Product
 from category import Category
 from request import ApiRequest
 from menu import Menu
-from bdd import Database
+from bdd import Bdd
 
 ''' créer virtualenv'''
 
@@ -44,14 +44,11 @@ if __name__ == "__main__":
 
     ''' Save data in the local database with mysql connector'''
     
-    my_database = Database(products[i].name, products[i].nutriscore, products[i].url, products[i].stores)
-
-    my_database.add_product()
-    #my_database.add_product(products[0].name, products[0].nutriscore, products[0].url, products[0].stores)
+    my_database = Bdd()
+    #my_database = Database((products, category)) # Ajouter les autres methodes : association et substitut
+    for f in range(307):
+        my_database.add_product(products[f].name, products[f].nutriscore, products[f].url, products[f].stores)
     
-        
-        # f = my_database.product_db(product)
-        #print(f)
-
-# Interaction with user
-    ''' This menu give the choice to the user '''
+    for c in range(5):
+        my_database.add_category(str(categories[c]))
+        # Comment éviter les doublons pour les catégories ? Distinct marche avec tout select, insert ?
