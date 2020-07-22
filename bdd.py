@@ -2,39 +2,46 @@ import mysql.connector
 import requests
 from product import Product
 
-openfood_db = mysql.connector.connect(
-    host="localhost",
-    user="root",
-    passwd="banane35",
-    database="openfooddb"
-)
 
-print(openfood_db)
-
-mycursor = openfood_db.cursor()
 
 class Bdd():
 
     def __init__(self):
-        pass
+        self.openfood_db = mysql.connector.connect(
+            host="localhost",
+            user="root",
+            passwd="banane35",
+            database="openfooddb"
+        )
 
-    ''' Function for the table products'''
+        print(self.openfood_db)
+
+        self.mycursor = self.openfood_db.cursor()
+
+    
     def add_product(self, a, b, c, d):
-        # mycursor.execute("DROP TABLE products")
-        # openfood_db.commit()
+        ''' Function for the table products'''
         sql = "INSERT INTO products (name, nutriscore, url, stores) VALUES (%s, %s, %s, %s)"
         val = (a, b, c, d)
-        mycursor.execute(sql, val)
-        openfood_db.commit()
-        print(mycursor.rowcount, "record inserted.")
-
+        self.mycursor.execute(sql, val)
+        self.openfood_db.commit()
+        print(self.mycursor.rowcount, "record inserted.")
+        # return category
     def add_category(self, name):
         
         sql = "INSERT INTO category (name) VALUES (%s)"
         val = (name, )
-        mycursor.execute(sql, val)
-        openfood_db.commit()
-        print(mycursor.rowcount, "record inserted.")
+        self.mycursor.execute(sql, val)
+        self.openfood_db.commit()
+        print(self.mycursor.rowcount, "record inserted.")
+
+    def add_association(self):
+        self.mycursor.execute("ALTER TABLE association" 
+        "ADD CONSTRAINT fk_product_category"
+        "FOREIGN KEY (id_product) REFERENCES products(id_product)"
+        "FOREIGN KEY (id_category) REFERENCES category(id_category)")
+        self.openfood_db.commit()
+        print(self.mycursor.rowcount, "record inserted.")
     # Plusieurs commit pour les créations de table ?
 
 

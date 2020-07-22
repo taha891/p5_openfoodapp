@@ -27,16 +27,29 @@ class Menu:
     def find_substitute(self):
         ''' This is the menu if the user want to find a new substitute'''
         # Enter a category
-        try:
-            user_category = int(input("Please choose a category"))
-            if user_category is not int:
-                raise TypeError("This category is not correct")
-            if user_category not in choice_accepted: # Comment aller chercher category
-                raise ValueError("This category doesn't exist")
+        user_category = int(input("Please choose a category"))
+        check_answer = 1
+        while check_answer:
+            
+            if user_category is not int and user_category not in range(6): # range(len(categories))
+                print("This category is not correct")
+                user_category = int(input("Please choose a category"))
+            else:
+                print(f" the category you choose is {user_category}") # return pour enregistrer la valeur
+                #Afficher les produits de la catégorie SELECT * FROM products WHERE id_category = user_category
+                check_answer = 0
 
-            user_product = (input("Please choose a category"))
-        except:
-            print("menu to search a substitute")
+            
+        user_product = (input("Please choose a product"))
+        ''' select a product in the list
+        get the id of product
+
+        SQL : SELECT * FROM products WHERE nutriscore < nutriscore substitut
+
+        save product
+
+
+        '''
         
 
 
@@ -46,12 +59,4 @@ class Menu:
         pass
 #def find_substitute():
     ''' This is the menu if the user want to find a new substitute'''
-    # try:
-    #     user_category = int(input("Please choose a category"))
-    #     if user_category is not int:
-    #         raise TypeError("This category is not correct")
-    #     if user_category not in categories.index
-    #         raise ValueError("This category doesn't exist")
 
-    #user_product = (input("Please choose a category")
-#find_substitute()
