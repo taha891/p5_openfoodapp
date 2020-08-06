@@ -16,38 +16,58 @@ class Database():
 
         self.mycursor = self.openfood_db.cursor()
         
-   
+    def create_db(self):
+        ''' Create the database'''
+        # drop if existe pour tout effacer
+        self.mycursor.execute("DROP DATABASE IF EXISTS openfooddb")
+        self.mycursor.execute("CREATE DATABASE IF NOT EXISTS openfooddb")
+        self.openfood_db.commit()
 
     ''' Create table for the products and categories'''
     def create_table(self):
         self.mycursor.execute("CREATE TABLE IF NOT EXISTS products ("
-            "id_product INT UNSIGNED NOT NULL AUTO_INCREMENT,"
+            "code_bar VARCHAR(255),"
             "name VARCHAR(255),"
-            "nutriscore VARCHAR(1),"
+            "nutriscore VARCHAR(3),"
             "url VARCHAR(250)," 
             "stores LONGTEXT,"
-            "PRIMARY KEY (id_product))")
-        self.mycursor.execute("CREATE TABLE IF NOT EXISTS category ("
-        "id_category SMALLINT UNSIGNED NOT NULL AUTO_INCREMENT,"
-        "name VARCHAR(255),"
-        "PRIMARY KEY (id_category))")
-        self.mycursor.execute("CREATE TABLE IF NOT EXISTS association ("
-        "code_asso INT UNSIGNED NOT NULL AUTO_INCREMENT,"
-        "id_product INT UNSIGNED NOT NULL,"
-        "id_category SMALLINT UNSIGNED NOT NULL,"
-        "PRIMARY KEY(code_asso)," 
-        "INDEX (id_product),"
-        "INDEX (id_category),"
-        "CONSTRAINT fk_product_category"
-        "   FOREIGN KEY(id_product) REFERENCES products(id_product),"
-        "   FOREIGN KEY(id_category) REFERENCES category(id_category))")
-        #mycursor.execute("DELETE FROM products")
+            "PRIMARY KEY (code_bar))"
+            "DEFAULT CHARSET=utf8 ENGINE = InnoDB")
+        self.mycursor.execute(
+            "CREATE TABLE IF NOT EXISTS category ("
+            "name VARCHAR(255),"
+            "PRIMARY KEY (name))"
+            "CHARSET=utf8 ENGINE = InnoDB")
+        
+        self.mycursor.execute(
+            "CREATE TABLE IF NOT EXISTS association ("
+            "code_asso INT UNSIGNED NOT NULL AUTO_INCREMENT,"
+            "id_product VARCHAR(255) DEFAULT 1,"
+            "id_category VARCHAR(255) DEFAULT 2,"
+            "PRIMARY KEY(code_asso))"
+            "CHARSET=utf8 ENGINE = InnoDB")
         self.openfood_db.commit()
-        # ALTER TABLE association ADD FOREIGN KEY (id_product) REFERENCES products(id_product)
+        
+        self.mycursor.execute(
+            "CREATE TABLE IF NOT EXISTS substitute ("
+            "id_substitute INT UNSIGNED NOT NULL AUTO_INCREMENT,"
+            "id_product INT UNSIGNED NOT NULL,"
+            "id_toreplace INT UNSIGNED NOT NULL,"
+            "PRIMARY KEY(id_substitute))"
+            "CHARSET=utf8 ENGINE = InnoDB")
+        
+        # self.mycursor.execute("ALTER TABLE association "
+        #                       " ADD CONSTRAINT FK_category"
+        #                       " FOREIGN KEY (id_category) REFERENCES category(name)")
+        self.mycursor.execute("ALTER TABLE association "
+                              " ADD CONSTRAINT FK_product"
+                              " FOREIGN KEY (id_product) REFERENCES products(code_bar)")
+        self.openfood_db.commit()
 
-    # def create_db(self):
-    #     self.mycursor.execute("CREATE DATABASE openfooddb")
-    #     self.openfood_db.commit()
+
+
+    
+    
     
     # def reset(self):
     #     '''Reset and clean all'''
@@ -55,30 +75,9 @@ class Database():
     # DROP DATABASE IF EXISTS opendooddb;
     # CREATE DATABASE openfooddb;
     # USE openfooddb;   
-    # CREATE TABLE IF NOT EXISTS products (
-    #     id_product INT UNSIGNED NOT NULL AUTO_INCREMENT,
-    #     name VARCHAR(255),
-    #     nutriscore VARCHAR(1),
-    #     url VARCHAR(250), stores LONGTEXT, PRIMARY KEY (id));
-    # CREATE TABLE IF NOT EXISTS category(
-    #     id_category SMALLINT UNSIGNED NOT NULL AUTO_INCREMENT,
-    #     name VARCHAR(255), 
-    #     PRIMARY KEY (id));
-    # CREATE TABLE association (
-    #     code_asso INT UNSIGNED NOT NULL AUTO_INCREMENT, 
-    #     id_product INT NOT NULL,
-    #     id_category SMALLINT NOT NULL,
-    
-    #     PRIMARY KEY(code_asso),
-    #     INDEX (id_product)
-    #     INDEX (id_category)
 
-    #     FOREIGN KEY(id_product)
-    #         REFERENCES products(id_product)
 
-    #     FOREIGN KEY(id_category)
-    #         REFERENCES products(id_category)"""
-    
+
     #     self.mycursor.execute(self.req, multi=True)
     #     self.openfood_db.commit()
 
@@ -86,18 +85,5 @@ class Database():
     def association(self):
         ''' 
         Pour chaque produit obtenir id produit et id category
-        
-        
-        '''
-        pass
-
-    def substitute():
-        ''' this function givea substitute for a product
-        
-        SELECT FROM products WHERE 
-        category = category choisi 
-        nutriscore < nutriscore product
-
-        CREATE TABLE substitute(idsubstitut INT UNSIGNED NOT NULL AUTO_INCREMENT,  id_product INT, PRIMARY KEY (id))")
         '''
         pass

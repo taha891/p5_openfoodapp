@@ -13,8 +13,9 @@ if __name__ == "__main__":
     
     ''' Get the data from the API'''
 
-    category = ["legumineuses", "infusions", "boissons-aux-fruits",
-                "cremes", "plats-prepares-en-conserve"] # verif category
+    category = ["legumineuses", "infusions",
+                "boissons-aux-fruits", "cereales-et-pommes-de-terre", "cremes"]
+    
 
     ''' Instantiation of 5 categories of products '''
     categories = []
@@ -23,41 +24,50 @@ if __name__ == "__main__":
         a = Category(category[i])
         categories.append(a)
         i += 1
+    #print(categories)
     
-# Ajouter l'instance dans une liste ( append)
     ''' Request from the API to get the product'''
     #print(categories[0].category)
     products = []
     for x in range(5):
-        var = ApiRequest(categories[x])  # instance de categorie dans API
+        var = ApiRequest(categories[x])
         liste = var.request()
-     
-        ''' Store the product in the Product object'''
-       # instancier mes produits depuis la liste
+        print(liste)
+
         for i in range(len(liste)):
+        #''' Store the product in the Product object'''
             product = Product(x, liste[i])
             products.append(product)
 
-    print(products[0].name)       
+    ''' Create database locally to insert API request'''
+    my_db = Database()
+    #my_db.create_db() # enlever pour que ça marche
+    my_db.create_table() 
+    my_database = Bdd()
 
     ''' Save data in the local database with mysql connector'''
-    my_db = Database()
-    my_db.create_table()  
-    my_database = Bdd()
-    #my_database = Database((products, category)) # Ajouter les autres methodes : association et substitut
-    for f in range(307):
-        my_database.add_product(products[f].name, products[f].nutriscore, products[f].url, products[f].stores)
-
     for c in range(5):
-        my_database.add_category(str(categories[c]))
+        my_database.add_category(category[c])
+        #print(type(categories[c]))
+    for f in range(315): # au dela de 315 list out of index
+        
+        my_database.add_product(products[f].code, products[f].name, products[f].nutriscore, products[f].url, products[f].stores)    
+        if products[f].code != "":
+            my_database.add_association(category[products[f].category], products[f].code)
+        print(category[products[f].category])
+
+    # def find_cat(x):
+    #     user_category = int(input("Please choose a category: "))
+    #     category_name = x[user_category]
+    #     print(category_name)
+    # 
+    # find_cat(category)
+
     
-    my_database.add_association()
-        # Comment éviter les doublons pour les catégories ? Distinct marche avec tout select, insert ?
+        # Comment éviter les doublons pour les catégories ? Distinct marche avec tout select, i:ppnsert ?
 
     ''' Interaction client'''
 
     ''' First menu '''
     # menu = Menu()
     # menu.welcome_menu()
-
-    

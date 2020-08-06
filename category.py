@@ -3,8 +3,6 @@ class Category:
 
     def __init__(self, category):
         self.category = category #self.name = category
-        
-        # Ok le constructeur ?
         # Liste ou dictionnaire pour les catégories ?
 
     def __str__(self):
@@ -13,6 +11,7 @@ class Category:
     
     def client_category(self):
         ''' return the choice of the client and give the products of it'''
+        
         pass
 
     def create_list(self, category):

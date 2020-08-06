@@ -7,15 +7,14 @@ from request import ApiRequest
 class Product:
     ''' This class search the date in a category'''
     def __init__(self, id_category, liste):
-        self.category = id_category
-        self.name = liste[0]
-        self.nutriscore = liste[1]
-        self.url = liste[2]
-        self.stores = liste[3]
+        self.category = id_category # + 1 to have the first category = 1
+        self.code = liste[0]
+        self.name = liste[1]
+        self.nutriscore = liste[2]
+        self.url = liste[3]
+        self.stores = liste[4]
         #print(self.name)
-        # utiliser @property pour faire de la methode un attribut
-        # Faire un split tous les 4 élements
-
+        
     def add_product(self):
         return(self.name)
         return(self.nutriscore)

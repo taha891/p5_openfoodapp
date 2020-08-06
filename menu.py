@@ -24,7 +24,7 @@ class Menu:
             self.my_substitute()
         else: print("please choose 1 or 2")
     
-    def find_substitute(self):
+    def find_substitute(self, user_category, user_product):
         ''' This is the menu if the user want to find a new substitute'''
         # Enter a category
         user_category = int(input("Please choose a category"))
@@ -46,7 +46,7 @@ class Menu:
 
         SQL : SELECT * FROM products WHERE nutriscore < nutriscore substitut
 
-        save product
+        save product in the list
 
 
         '''
