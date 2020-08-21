@@ -51,21 +51,27 @@ class Database():
         self.mycursor.execute(
             "CREATE TABLE IF NOT EXISTS substitute ("
             "id_substitute INT UNSIGNED NOT NULL AUTO_INCREMENT,"
-            "id_product INT UNSIGNED NOT NULL,"
-            "id_toreplace INT UNSIGNED NOT NULL,"
+            "id_product VARCHAR(255),"
+            "substitute VARCHAR(255),"
             "PRIMARY KEY(id_substitute))"
             "CHARSET=utf8 ENGINE = InnoDB")
         
-        # self.mycursor.execute("ALTER TABLE association "
-        #                       " ADD CONSTRAINT FK_category"
-        #                       " FOREIGN KEY (id_category) REFERENCES category(name)")
+        self.mycursor.execute("ALTER TABLE association "
+                              " ADD CONSTRAINT FK_category"
+                              " FOREIGN KEY (id_category) REFERENCES category(name)")
         self.mycursor.execute("ALTER TABLE association "
                               " ADD CONSTRAINT FK_product"
                               " FOREIGN KEY (id_product) REFERENCES products(code_bar)")
         self.openfood_db.commit()
 
 
-
+        self.mycursor.execute("ALTER TABLE substitute "
+                            " ADD CONSTRAINT FK_product_selected"
+                            " FOREIGN KEY (id_product) REFERENCES products(code_bar)")
+        self.mycursor.execute("ALTER TABLE substitute "
+                            " ADD CONSTRAINT FK_substitute"
+                            " FOREIGN KEY (substitute) REFERENCES products(code_bar)")
+        self.openfood_db.commit()
     
     
     
@@ -74,16 +80,4 @@ class Database():
     #     self.req = """
     # DROP DATABASE IF EXISTS opendooddb;
     # CREATE DATABASE openfooddb;
-    # USE openfooddb;   
-
-
-
-    #     self.mycursor.execute(self.req, multi=True)
-    #     self.openfood_db.commit()
-
-
-    def association(self):
-        ''' 
-        Pour chaque produit obtenir id produit et id category
-        '''
-        pass
+    # USE openfooddb;

@@ -42,17 +42,45 @@ class Bdd():
         self.mycursor.execute(sql, val)
         self.openfood_db.commit()
         #print(self.mycursor.rowcount, "record inserted.")
+
+
+    def get_caterory(self):
+        self.mycursor.execute("SELECT * from category ORDER BY name DESC")
+        return self.mycursor.fetchall()
+
+    def get_products(self, category):
+        sql = """ SELECT association.code_asso, association.id_product, association.id_category, products.name, products.nutriscore
+            FROM association
+            inner join products
+            on association.id_product = products.code_bar
+            where id_category = %s"""
+        val = (category, )
+        self.mycursor.execute(sql, val)
+        return self.mycursor.fetchall()
     
-    ''' Requête qui affiche tous les produits d'une catégorie choisi 
+    def product_selected(self, code_asso):
+        sql = """ SELECT association.code_asso, association.id_product, association.id_category, products.name, products.nutriscore
+            FROM association
+            inner join products
+            on association.id_product = products.code_bar
+            where code_asso = %s"""
+        val = (code_asso, )
+        self.mycursor.execute(sql, val)
+        return self.mycursor.fetchall()
 
-    SELECT
-    '''
+    def find_substitute(self, category, nutriscore):
+        sql = """ SELECT association.code_asso, association.id_product, association.id_category, products.name, products.nutriscore
+            FROM association
+            inner join products
+            on association.id_product = products.code_bar
+            where id_category = %s AND nutriscore > %s LIMIT 1"""
+        val = (category, nutriscore)
+        self.mycursor.execute(sql, val)
+        return self.mycursor.fetchall()        
+    
 
-
-    # def substitute(user_category, user_product):
-    # ''' this function givea substitute for a product
-        
-    # SELECT FROM products FROM products WHERE 
-    # category = category choisi 
-    # nutriscore < nutriscore product
-    # CREATE TABLE substitute(idsubstitut INT UNSIGNED NOT NULL AUTO_INCREMENT,  id_product INT, PRIMARY KEY (id))")'''
+    def save_product(self, product_selected, substitute):
+            sql = "INSERT into substitute (id_product, substitute) VALUES (%s, %s)"
+            val = (product_selected, substitute)
+            self.mycursor.execute(sql, val)
+            self.openfood_db.commit()
