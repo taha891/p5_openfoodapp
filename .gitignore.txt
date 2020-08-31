@@ -1,4 +1,7 @@
+.git
 .idea/
+.vscode/
 __pycache__/
 openfood.mwb
 openfood.mwb.bak
+openfood_env/
