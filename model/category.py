@@ -1,0 +1,9 @@
+class Category:
+    ''' This class create, use and check the category of a product'''
+
+    def __init__(self, category):
+        self.category = category #self.name = category
+
+    def __str__(self):
+        return self.category
+
