@@ -9,9 +9,9 @@ def init_database():
         passwd="banane35",
     )
 
-    print(openfood_db)
-
     mycursor = openfood_db.cursor()
 
     mycursor.execute("DROP DATABASE IF EXISTS openfooddb")
+    openfood_db.commit()
     mycursor.execute("CREATE DATABASE IF NOT EXISTS openfooddb")
+    openfood_db.commit()
