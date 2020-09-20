@@ -1,19 +1,21 @@
 import mysql.connector
+from config import HOST, USER, PASSWD, DATABASE
 
 
-class Database():
+class Database:
 
     def __init__(self):
         self.openfood_db = mysql.connector.connect(
-            host="localhost",
-            user="root",
-            passwd="banane35",
-            database="openfooddb"
+            host=HOST,
+            user=USER,
+            passwd=PASSWD,
+            database=DATABASE
         )
 
         self.mycursor = self.openfood_db.cursor()
 
     ''' Create table for the products and categories'''
+
     def create_table(self):
         self.mycursor.execute("CREATE TABLE IF NOT EXISTS products ("
                               "code_bar VARCHAR(255),"

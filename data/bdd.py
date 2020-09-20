@@ -1,14 +1,15 @@
 import mysql.connector
+from config import HOST, USER, PASSWD, DATABASE
 
 
-class Bdd():
+class Bdd:
 
     def __init__(self):
         self.openfood_db = mysql.connector.connect(
-            host="localhost",
-            user="root",
-            passwd="banane35",
-            database="openfooddb"
+            host=HOST,
+            user=USER,
+            passwd=PASSWD,
+            database=DATABASE
         )
 
         self.mycursor = self.openfood_db.cursor()
@@ -68,7 +69,7 @@ class Bdd():
         FROM association
         inner join products
         on association.id_product = products.code_bar
-        where id_category = %s AND nutriscore > %s LIMIT 1"""
+        where id_category = %s AND nutriscore < %s LIMIT 1"""
         val = (category, nutriscore)
         self.mycursor.execute(sql, val)
         return self.mycursor.fetchall()

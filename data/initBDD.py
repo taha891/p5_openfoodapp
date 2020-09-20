@@ -1,12 +1,13 @@
 import mysql.connector
+from config import HOST, USER, PASSWD
 
 
 def init_database():
 
     openfood_db = mysql.connector.connect(
-        host="localhost",
-        user="root",
-        passwd="banane35",
+        host=HOST,
+        user=USER,
+        passwd=PASSWD,
     )
 
     mycursor = openfood_db.cursor()
