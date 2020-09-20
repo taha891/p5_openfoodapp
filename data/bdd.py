@@ -38,10 +38,12 @@ class Bdd:
         self.openfood_db.commit()
 
     def get_caterory(self):
+        ''' Method to get the category of products '''
         self.mycursor.execute("SELECT * from category ORDER BY name DESC")
         return self.mycursor.fetchall()
 
     def get_products(self, category):
+        ''' Method to get the products from database '''
         sql = """ SELECT association.code_asso, association.id_product,
             association.id_category, products.name, products.nutriscore
             FROM association
@@ -53,6 +55,7 @@ class Bdd:
         return self.mycursor.fetchall()
 
     def product_selected(self, code_asso):
+        ''' Get the product selected from user to find substitute'''
         sql = """ SELECT association.code_asso, association.id_product,
             association.id_category, products.name, products.nutriscore
             FROM association
@@ -64,6 +67,7 @@ class Bdd:
         return self.mycursor.fetchall()
 
     def find_substitute(self, category, nutriscore):
+        ''' Method to find substitute of a product selected '''
         sql = """ SELECT association.code_asso, association.id_product,
         association.id_category, products.name, products.nutriscore
         FROM association
@@ -75,6 +79,7 @@ class Bdd:
         return self.mycursor.fetchall()
 
     def save_product(self, product_selected, substitute):
+        ''' Method to save substitute in the favorite list '''
         sql = """INSERT into substitute (id_product, substitute)
              VALUES (%s, %s)"""
         val = (product_selected, substitute)
@@ -82,6 +87,7 @@ class Bdd:
         self.openfood_db.commit()
 
     def see_myfavorite(self):
+        ''' Method do display the favorite list of user substitute '''
         self.mycursor.execute(""" SELECT substitute.id_substitute,
         products.name, products.nutriscore, products.stores,
         substitute.substitute

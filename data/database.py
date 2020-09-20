@@ -17,6 +17,7 @@ class Database:
     ''' Create table for the products and categories'''
 
     def create_table(self):
+        ''' Request to create table '''
         self.mycursor.execute("CREATE TABLE IF NOT EXISTS products ("
                               "code_bar VARCHAR(255),"
                               "name VARCHAR(255),"

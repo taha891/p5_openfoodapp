@@ -7,6 +7,7 @@ class Menu:
         self.choix = 0
    
     def welcome_menu(self):
+        ''' Display the first menu '''
         print("          ***Main menu***        ")
         choice = int(input("""
                         1 : Find a substitute

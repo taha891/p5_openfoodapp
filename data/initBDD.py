@@ -3,7 +3,7 @@ from config import HOST, USER, PASSWD
 
 
 def init_database():
-
+    ''' Method to create and reset the database '''
     openfood_db = mysql.connector.connect(
         host=HOST,
         user=USER,

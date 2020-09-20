@@ -11,6 +11,7 @@ class ApiRequest:
         self.liste_prod = []
 
     def request(self):
+        ''' Method to get products from the API and store in a list '''
         payload = {"search_terms": self.category,
                    "search_tag": "categorie",
                    "sort_by": "unique_scans_n",
